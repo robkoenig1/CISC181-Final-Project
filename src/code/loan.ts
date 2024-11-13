@@ -137,7 +137,7 @@ export class Loan {
                 2,
             );
             cumulativeInterest += pmtInterest;
-            let pmtScheduledPayment = Loan.roundTo(loanBalance, 2);
+            let pmtScheduledPayment = Loan.roundTo(loanBalance + pmtInterest, 2) ;
             let pmtPrinciple: number = Loan.roundTo(
                 loanBalance - pmtInterest,
                 2,
