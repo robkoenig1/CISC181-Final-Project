@@ -8,7 +8,7 @@ import { WebzComponent } from "@boots-edu/webz";
  *
  */
 export class MainComponent extends WebzComponent {
-    private le: LoanEntryComponent = new LoanEntryComponent();
+    //private le: LoanEntryComponent = new LoanEntryComponent();
 
     constructor() {
         super(html, css);
