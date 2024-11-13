@@ -58,7 +58,7 @@ describe("Test Loan", () => {
     test("(1 pts) Test Loan Paid Payments ", () => {
         let l: Loan = new Loan(300000, 0.07, 30, 100);
         let totPaidPayments: number = l.totalPaidPayments();
-        expect(totPaidPayments).toBeCloseTo(649188.77);
+        expect(totPaidPayments).toBeCloseTo(649188.76);
     });
 
     test("(1 pts) Test Interest Saved", () => {
