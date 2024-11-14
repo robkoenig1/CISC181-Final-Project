@@ -45,44 +45,48 @@ export class Loan {
      * @returns total expected interest
      */
     totalExpectedInterest(): number {
-        // FixMe
-        return 0;
+        return this.totalExpectedPayments() - this.loanAmount;
     }
 
     //  TotalExpectedPayments - The total amount of expected payments, if no extra payments are made
     totalExpectedPayments(): number {
-        // FixMe
-        return 0;
+        return Loan.roundTo(Math.abs(this.pmt) * this.loanLength * 12, 2);
     }
 
     totalPaidInterest(): number {
+        let total: number = 0;
+        for (let i: number = 0; i < this.payments.length; i++) {
+            total = total + this.payments[i].getInterestAmount();
+        }
         // FixMe
-        return 0;
+        return total;
     }
 
     totalPaidPayments(): number {
-        // FixMe
-        return 0;
+        let total: number = 0;
+        for (let i: number = 0; i < this.payments.length; i++) {
+            total = total + this.payments[i].getPaymentAmount();
+        }
+        return Loan.roundTo(total, 2);
     }
 
     interestSaved(): number {
-        // FixMe
-        return 0;
+        return Loan.roundTo(
+            this.totalExpectedInterest() - this.totalPaidInterest(),
+            2,
+        );
     }
 
     paymentsSaved(): number {
-        // FixMe
-        return 0;
+        return this.totalExpectedPaymentCount() - this.totalPaymentCount();
     }
 
     totalPaymentCount(): number {
-        // FixMe
-        return 0;
+        return this.payments.length;
     }
 
     totalExpectedPaymentCount(): number {
-        // FixMe
-        return 0;
+        return this.loanLength * 12;
     }
 
     getSpecificPayment(paymentNumber: number): Payment {
@@ -94,6 +98,7 @@ export class Loan {
     createPayments(paymentNumber: number, startingLoanAmount: number): void {
         let cumulativeInterest: number = 0;
         let loanBalance: number = startingLoanAmount;
+        let pmtNumber: number = paymentNumber;
 
         while (loanBalance > this.pmt) {
             // FixMe:
@@ -105,10 +110,16 @@ export class Loan {
             //  Calculate PmtPrinciple
             //  Don't forget to deal with extra payment
             //  Calculate PmtEndingBalance
+            let total: number = this.pmt + this.extraPayment;
+            let pmtInterest: number = (loanBalance * this.interestRate) / 12;
+            cumulativeInterest += pmtInterest;
+            let pmtPrinciple: number = total - pmtInterest;
+            let pmtScheduledPayment: number = Loan.roundTo(total, 2);
+            let pmtEndingBalance: number = loanBalance - pmtPrinciple;
 
             //  Create a payment
             let newPayment: Payment = new Payment(
-                paymentNumber,
+                pmtNumber,
                 loanBalance,
                 pmtScheduledPayment,
                 pmtInterest,
@@ -125,6 +136,7 @@ export class Loan {
             if (Loan.roundTo(loanBalance, 2) == 0) {
                 break;
             }
+            pmtNumber++;
         }
 
         //  Handle the final payment (if needed)
@@ -137,7 +149,10 @@ export class Loan {
                 2,
             );
             cumulativeInterest += pmtInterest;
-            let pmtScheduledPayment = Loan.roundTo(loanBalance + pmtInterest, 2) ;
+            let pmtScheduledPayment = Loan.roundTo(
+                loanBalance + pmtInterest,
+                2,
+            );
             let pmtPrinciple: number = Loan.roundTo(
                 loanBalance - pmtInterest,
                 2,
