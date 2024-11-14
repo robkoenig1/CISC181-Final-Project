@@ -17,6 +17,14 @@ export class Loan {
         //  set this.PMT using Finance.PMT.
         //  Sample call would be this.PMT = Finance.pmt(0.07/12,30*12,30000,0,0);
 
+        this.pmt = Math.abs(
+            Finance.calculatePMT(
+                interestRate / 12,
+                loanLength * 12,
+                loanAmount,
+                0,
+            ),
+        );
         let paymentNumber: number = 0;
         this.createPayments(paymentNumber, loanAmount);
     }
