@@ -55,5 +55,39 @@ export class Payment {
         private extraPayment: number,
     ) {}
 
-    // FixMe: Implement the missing getters
+    getPaymentNumber(): number {
+        return this.paymentNumber;
+    }
+
+    getBeginningBalance(): number {
+        return this.beginningBalance;
+    }
+
+    getPaymentAmount(): number {
+        return this.paymentAmount;
+    }
+
+    getInterestAmount(): number {
+        return this.interestAmount;
+    }
+
+    getPrincipleAmount(): number {
+        return this.principleAmount;
+    }
+
+    getRemainingBalance(): number {
+        return this.remainingBalance;
+    }
+
+    setRemainingBalance(balance: number): void {
+        this.remainingBalance = balance;
+    }
+
+    getCumulativeInterest(): number {
+        return this.cumulativeInterest;
+    }
+
+    getExtraPayment(): number {
+        return this.extraPayment;
+    }
 }
