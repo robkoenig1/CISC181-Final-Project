@@ -79,10 +79,7 @@ export class Loan {
     }
 
     interestSaved(): number {
-        return Loan.roundTo(
-            this.totalExpectedInterest() - this.totalPaidInterest(),
-            2,
-        );
+        return this.totalExpectedInterest() - this.totalPaidInterest();
     }
 
     paymentsSaved(): number {
